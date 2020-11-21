@@ -1,0 +1,115 @@
+/* make varibles for colors */
+:root {
+    --first-color: rgb(12, 12, 12);
+    --second-color: rgb(39, 30, 88); 
+    --third-color: rgb(13, 151, 206);
+    --fourth-color:rgb(211, 211, 211);
+}
+
+body {
+    color: var(--first-color);
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--fourth-color);
+}
+
+/* start header style */
+header {
+    padding: 10px 20px;
+    background-color: var(--second-color);
+    display: flex;
+    top: 0;
+    z-index: 9999;
+    justify-content: space-between;
+}
+header a{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    color: var(--fourth-color);
+    background-color: var(--third-color);
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+    color: var(--fourth-color);
+    margin: auto 30px auto auto;
+}
+.score-style {
+    font-size: 35px;
+    font-weight: bold;
+    
+} 
+/* End header style */
+
+/* Start Button css */
+.button-style {
+    color: var(--fourth-color);
+    background-color: var(--second-color);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    font-size: 25px;
+    text-align: center;
+}
+.button-container {
+  height: 60px;
+  position: relative;  
+}
+.button-center {
+    margin: 0;
+    position: absolute; 
+    top: 50%;
+    left: 50%; 
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+/* End Button css */
+
+/* Quiz Style Start */
+main {
+    margin: 40px 200px auto 200px; 
+ } 
+
+/* WelcomeQuiz style  */
+
+.h1-welcome {
+    font-size: 40px;
+    font-style: bold;
+    text-align: center;
+    width: 100%;
+    margin: 10px auto 20px auto;
+}
+
+.p-welcome {
+    font-size: 25px;
+    line-height: 1.7;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    margin: 0 auto 20px auto;
+}
+
+/* Questions style */
+
+.h1-question {
+    font-size: 35px;
+    font-style: bold;
+    text-align: left;
+    width: 100%;
+    margin: -50px auto 20px auto;
+}
+
+
+
+
+
+/* //hide different questions from page */
+.hide {
+    display: none;
+}
+
+
