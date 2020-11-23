@@ -104,37 +104,36 @@ var displayQuestions = function () {
         QuizEl.appendChild(questionPage);
 
         //display answers and check if answer is correct   
-        function displayAnswers() {
-            for (var i = 0; i < questions[questionCounter].answer.length; i++) {
-                var buttonContainerEl = document.createElement("div");
-                buttonContainerEl.className = "button-container";
-                var answerButton = document.createElement("button");
-                answerButton.className = "button-style";
-                answerButton.textContent = questions[questionCounter].answer.text[i];
-                buttonContainerEl.appendChild(answerButton);
-                questionPage.appendChild(buttonContainerEl);
-                console.log(choicesButton);
+    
+        for (var i = 0; i < questions[questionCounter].answer.length; i++) {
+            var buttonContainerEl = document.createElement("div");
+            buttonContainerEl.className = "button-container";
+            var answerButton = document.createElement("button");
+            answerButton.className = "button-style";
+            answerButton.textContent = questions[questionCounter].answer[i].text;
+            buttonContainerEl.appendChild(answerButton);
+            questionPage.appendChild(buttonContainerEl);
+            console.log(answerButton);
 
-                // choicesButton.addEventListener ("click", function () {
+            // choicesButton.addEventListener ("click", function () {
 
-                //     if (i === 0 || i === 1 || i === 3) {
-                //         if (questions[questionCounter].c === questions[questionCounter].a) { //need to set if button of choices is clicked
-                //             var correctAnswerDisplay = document.createElement("div");
-                //             correctAnswerDisplay.className = "answer";
-                //             correctAnswerDisplay.textContent = "RIGHT!";
-                //             QuizEl.appendChild(correctAnswerDisplay);
-                //         }
-                //         else {
-                //         var incorrectAnswerDisplay = document.createElement("div");
-                //         incorrectAnswerDisplay.className = "answer";
-                //         incorrectAnswerDisplay.textContent = "WRONG!"
-                //         QuizEl.appendChild(incorrectAnswerDisplay);
-                //         quizScore = quizScore - 10;
-                //     }
-                // }
-            }
+            //     if (i === 0 || i === 1 || i === 3) {
+            //         if (questions[questionCounter].c === questions[questionCounter].a) { //need to set if button of choices is clicked
+            //             var correctAnswerDisplay = document.createElement("div");
+            //             correctAnswerDisplay.className = "answer";
+            //             correctAnswerDisplay.textContent = "RIGHT!";
+            //             QuizEl.appendChild(correctAnswerDisplay);
+            //         }
+            //         else {
+            //         var incorrectAnswerDisplay = document.createElement("div");
+            //         incorrectAnswerDisplay.className = "answer";
+            //         incorrectAnswerDisplay.textContent = "WRONG!"
+            //         QuizEl.appendChild(incorrectAnswerDisplay);
+            //         quizScore = quizScore - 10;
+            //     }
+            // }
         }
-        displayAnswers();
+    
         //create next button
         var nextButtonContainer = document.createElement("div");
         var nextButton = document.createElement("button");
@@ -145,7 +144,7 @@ var displayQuestions = function () {
         QuizEl.appendChild(nextButtonContainer);
 
         nextButton.addEventListener("click", function () {
-            hideText(question, nextButton);
+            hideText(question, nextButton, answerButton);
             questionCounter++;
             displayQuestions();
         });
@@ -156,6 +155,7 @@ var displayQuestions = function () {
 var hideText = function (question, nextButton) {
     question.className = "hide";
     nextButton.className = "hide";
+    answerButton.className = "hide";
 };
 
 
