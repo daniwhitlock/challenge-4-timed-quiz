@@ -91,6 +91,10 @@ var WelcomeQuiz = function () {
 
 //function to go through and display answers as buttons
 var displayQuestions = function () {
+    if (quizScore <= 0) {
+        GameOver();
+        return;
+    }
     //Display questions, and then each question's specific answer choices
     if (questionCounter <= questions.length) {
         var questionPage = document.createElement("div");
@@ -103,40 +107,40 @@ var displayQuestions = function () {
         QuizEl.appendChild(questionPage);
 
         //display answers and check if answer is correct   
-    
+
         for (var i = 0; i < questions[questionCounter].answer.length; i++) {
             var buttonContainerEl = document.createElement("div");
             buttonContainerEl.className = "button-container";
             var answerButton = document.createElement("button");
             answerButton.className = "button-style";
             answerButton.textContent = questions[questionCounter].answer[i].text;
-            // answerButton.addEventListener("mouseover", function(){
-            //     answerButton.setAttribute("style", "background-color: rgb(13, 151, 206)");
+            console.log(answerButton);
+            answerButton.addEventListener("mouseover", function () {
+                answerButton.style.backgroundColor = "rgb(13, 151, 206)";
+                //answerButton.setAttribute("style", background-color: rgb(13, 151, 206"));
+            });
+            // answerButton.addEventListener("click", function () {
+            //     if (questions[questionCounter].answer[i].correct == true) {
+            //         var correctAnswerDisplay = document.createElement("div");
+            //         correctAnswerDisplay.className = "answer";
+            //         correctAnswerDisplay.textContent = "RIGHT!";
+            //         QuizEl.appendChild(correctAnswerDisplay);
+            //         console.log()
+            //     }
+            //     else {
+            //         correctAnswerDisplay.className = "answer";
+            //         correctAnswerDisplay.textContent = "WRONG!";
+            //         QuizEl.appendChild(correctAnswerDisplay);
+            //         quizScore = quizScore - 10;
+            //     }
             // });
 
             buttonContainerEl.appendChild(answerButton);
             questionPage.appendChild(buttonContainerEl);
-            
 
-            // choicesButton.addEventListener ("click", function () {
 
-            //     if (i === 0 || i === 1 || i === 3) {
-            //         if (questions[questionCounter].c === questions[questionCounter].a) { //need to set if button of choices is clicked
-            //             var correctAnswerDisplay = document.createElement("div");
-            //             correctAnswerDisplay.className = "answer";
-            //             correctAnswerDisplay.textContent = "RIGHT!";
-            //             QuizEl.appendChild(correctAnswerDisplay);
-            //         }
-            //         else {
-            //         var incorrectAnswerDisplay = document.createElement("div");
-            //         incorrectAnswerDisplay.className = "answer";
-            //         incorrectAnswerDisplay.textContent = "WRONG!"
-            //         QuizEl.appendChild(incorrectAnswerDisplay);
-            //         quizScore = quizScore - 10;
-            //     }
-            // }
         }
-        
+
         //create next button
         var nextButtonContainer = document.createElement("div");
         var nextButton = document.createElement("button");
@@ -146,14 +150,17 @@ var displayQuestions = function () {
         nextButtonContainer.appendChild(nextButton);
         QuizEl.appendChild(nextButtonContainer);
 
+        //What happens when you click the next button
         nextButton.addEventListener("click", function () {
             hideText(question, nextButton, answerButton);
             questionCounter++;
             displayQuestions();
         });
+        //check timer
+        
     }
-
 };
+
 //hide text
 var hideText = function (question, nextButton, answerButton) {
     question.className = "hide";
@@ -182,12 +189,18 @@ var startQuiz = function () {
 
     //Go through array of questions and choices
     displayQuestions();
+    
 };
 
 var GameOver = function () {
-    // alert("The game is over!");
+    var h1GameOver = document.createElement("h1");
+    h1GameOver.className ="h1-welcome";
+    h1GameOver.textContent= "The game is over";
+    QuizEl.appendChild(h1GameOver);
 
-    //When game over
+
+
+    
     //save my initials and score
     //TO DO: create an array to save all the information- initials and score and potentially an id to specify which of the scores- use push to get in
 
