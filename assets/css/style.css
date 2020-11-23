@@ -3,7 +3,7 @@
     --first-color: rgb(12, 12, 12);
     --second-color: rgb(39, 30, 88); 
     --third-color: rgb(13, 151, 206);
-    --fourth-color:rgb(211, 211, 211);
+    --fourth-color:rgb(233, 230, 230);
 }
 
 body {
@@ -70,6 +70,20 @@ header div {
     transform: translate(-50%, -50%);
 }
 
+.button-right {
+    margin: 0;
+    float: right;
+}
+.button-change-color {
+    color: var(--second-color);
+    background-color: var(--third-color);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    font-size: 25px;
+    text-align: center;
+}
+
 /* End Button css */
 
 /* Quiz Style Start */
@@ -101,6 +115,15 @@ section {
     text-align: left;
     width: 100%;
     margin: 0px auto 20px auto;
+}
+.answer {
+    font-size: 35px;
+    font-style: lighter;
+    text-align: left;
+    color: lightslategray;
+    border-top: 3px solid lightslategray;
+    margin: 20px auto 20px auto;
+
 }
 
 
