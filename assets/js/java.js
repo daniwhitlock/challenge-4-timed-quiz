@@ -91,7 +91,6 @@ var WelcomeQuiz = function () {
 
 //function to go through and display answers as buttons
 var displayQuestions = function () {
-    console.log("hello");
     //Display questions, and then each question's specific answer choices
     if (questionCounter <= questions.length) {
         var questionPage = document.createElement("div");
@@ -111,9 +110,13 @@ var displayQuestions = function () {
             var answerButton = document.createElement("button");
             answerButton.className = "button-style";
             answerButton.textContent = questions[questionCounter].answer[i].text;
+            // answerButton.addEventListener("mouseover", function(){
+            //     answerButton.setAttribute("style", "background-color: rgb(13, 151, 206)");
+            // });
+
             buttonContainerEl.appendChild(answerButton);
             questionPage.appendChild(buttonContainerEl);
-            console.log(answerButton);
+            
 
             // choicesButton.addEventListener ("click", function () {
 
@@ -133,7 +136,7 @@ var displayQuestions = function () {
             //     }
             // }
         }
-    
+        
         //create next button
         var nextButtonContainer = document.createElement("div");
         var nextButton = document.createElement("button");
@@ -152,7 +155,7 @@ var displayQuestions = function () {
 
 };
 //hide text
-var hideText = function (question, nextButton) {
+var hideText = function (question, nextButton, answerButton) {
     question.className = "hide";
     nextButton.className = "hide";
     answerButton.className = "hide";
