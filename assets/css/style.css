@@ -21,7 +21,7 @@ header {
     z-index: 9999;
     justify-content: space-between;
 }
-header a{
+header button{
     text-decoration: none;
     display: flex;
     justify-content: center;
@@ -54,7 +54,7 @@ header div {
     font-size: 25px;
     text-align: center;
 }
-.button-hover {
+.button-style:hover {
     background-color: var(--third-color);
 }
 .button-container {

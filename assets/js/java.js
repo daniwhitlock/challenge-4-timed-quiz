@@ -1,12 +1,16 @@
 //global VARIABLES 
 var ViewHighScoreEl = document.querySelector("#view-high-score");
+
 var QuizEl = document.querySelector("#quiz");
 var startEl = document.querySelector("#start");
 var timerScore = document.querySelector("#timer-score");
-
-var quizScore = 60; //start score/timer at 60 seconds
+var displayRightWrong = document.querySelector("#check-answer");
+var displayHighScores = document.queryCommandEnabled("#display-high-scores");
+var quizScore = 90 //start score/timer at 90 seconds
 var startButtonEl = document.createElement("button"); //start quiz button
 var questionCounter = 0;
+var timeInterval;
+
 
 var questions = [
     {
@@ -91,12 +95,13 @@ var WelcomeQuiz = function () {
 
 //function to go through and display answers as buttons
 var displayQuestions = function () {
-    if (quizScore <= 0) {
+    if (quizScore <= 0 || questionCounter > questions.length) {
         GameOver();
-        return;
+        
     }
     //Display questions, and then each question's specific answer choices
-    if (questionCounter <= questions.length) {
+    if (questionCounter < questions.length) {
+        QuizEl.innerHTML = "";
         var questionPage = document.createElement("div");
         var questionHeader = document.createElement("div");
         var question = document.createElement("h1");
@@ -114,70 +119,53 @@ var displayQuestions = function () {
             var answerButton = document.createElement("button");
             answerButton.className = "button-style";
             answerButton.textContent = questions[questionCounter].answer[i].text;
+            //.value is giving the actual button a value attribute
+            answerButton.value = questions[questionCounter].answer[i].correct;
+            answerButton.onclick = checkAnswers;
             console.log(answerButton);
-            answerButton.addEventListener("mouseover", function () {
-                answerButton.style.backgroundColor = "rgb(13, 151, 206)";
-                //answerButton.setAttribute("style", background-color: rgb(13, 151, 206"));
-            });
-            // answerButton.addEventListener("click", function () {
-            //     if (questions[questionCounter].answer[i].correct == true) {
-            //         var correctAnswerDisplay = document.createElement("div");
-            //         correctAnswerDisplay.className = "answer";
-            //         correctAnswerDisplay.textContent = "RIGHT!";
-            //         QuizEl.appendChild(correctAnswerDisplay);
-            //         console.log()
-            //     }
-            //     else {
-            //         correctAnswerDisplay.className = "answer";
-            //         correctAnswerDisplay.textContent = "WRONG!";
-            //         QuizEl.appendChild(correctAnswerDisplay);
-            //         quizScore = quizScore - 10;
-            //     }
-            // });
-
+           
             buttonContainerEl.appendChild(answerButton);
             questionPage.appendChild(buttonContainerEl);
 
 
         }
 
-        //create next button
-        var nextButtonContainer = document.createElement("div");
-        var nextButton = document.createElement("button");
-        nextButtonContainer.className = "button-right";
-        nextButton.className = "button-change-color";
-        nextButton.textContent = "NEXT";
-        nextButtonContainer.appendChild(nextButton);
-        QuizEl.appendChild(nextButtonContainer);
-
-        //What happens when you click the next button
-        nextButton.addEventListener("click", function () {
-            hideText(question, nextButton, answerButton);
-            questionCounter++;
-            displayQuestions();
-        });
-        //check timer
-        
     }
 };
 
-//hide text
-var hideText = function (question, nextButton, answerButton) {
-    question.className = "hide";
-    nextButton.className = "hide";
-    answerButton.className = "hide";
+var  checkAnswers = function () {
+    //empty out display before you populate new information
+    displayRightWrong.innerHTML = "";
+    console.log(this.value);
+    if (this.value == "true") {
+        var correctAnswerDisplay = document.createElement("div");
+        correctAnswerDisplay.className = "answer";
+        correctAnswerDisplay.textContent = "PREVIOUS ANSWER WAS RIGHT!";
+        displayRightWrong.appendChild(correctAnswerDisplay);
+        
+    }
+    else {
+        var incorrectAnswerDisplay = document.createElement("div");
+        incorrectAnswerDisplay.className = "answer";
+        incorrectAnswerDisplay.textContent = "PREVIOUS ANSWER WAS WRONG!";
+        displayRightWrong.appendChild(incorrectAnswerDisplay);
+        quizScore = quizScore - 10;
+    }
+    questionCounter++;
+    displayQuestions();
 };
-
 
 //Timer Function 
 var ScoreTracker = function () {
-    var timeInterval = setInterval(function () {
+    timeInterval = setInterval(function () {
         if (quizScore > 0) {
+            quizScore--; //decrement by 1 every second or pass through setInterval function 
             timerScore.className = "score-style";
             timerScore.textContent = "Score: " + quizScore;
-            quizScore--; //decrement by 1 every second or pass through setInterval function 
         }
         else if (quizScore === 0) {
+            quizScore = 0;
+            timerScore.textContent = "Score: " + quizScore;
             GameOver();
         }
     }, 1000);
@@ -193,18 +181,34 @@ var startQuiz = function () {
 };
 
 var GameOver = function () {
+    clearInterval(timeInterval); //stops the counter from continuing to go 
+    QuizEl.innerHTML = "";
     var h1GameOver = document.createElement("h1");
     h1GameOver.className ="h1-welcome";
     h1GameOver.textContent= "The game is over";
     QuizEl.appendChild(h1GameOver);
 
 
-
-    
     //save my initials and score
     //TO DO: create an array to save all the information- initials and score and potentially an id to specify which of the scores- use push to get in
 
 };
 
+//create function for viewing highscore 
+//localStorage.setItem
+//localStorage.getItem
+
 WelcomeQuiz();
 startButtonEl.addEventListener("click", startQuiz);
+ViewHighScoreEl.addEventListener("click", function() {
+    if (this.value === "true") {
+        //display area that they show their score
+        this.value = "false";
+        
+    }
+    else {
+        //when it is false
+        this.value = "true";
+        displayHighScores.className = "hide";
+    }
+})
