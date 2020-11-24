@@ -97,6 +97,28 @@ var WelcomeQuiz = function () {
         startButtonEl.className = "hide";
     }));
 };
+var checkAnswers = function () {
+    //empty out display before you populate new information
+    displayRightWrongEl.innerHTML = "";
+    console.log(this.value);
+    if (this.value == "true") {
+        console.log("they answered correctly")
+        // var correctAnswerDisplay = document.createElement("div");
+    //     correctAnswerDisplay.className = "answer";
+    //     correctAnswerDisplay.textContent = "PREVIOUS ANSWER WAS RIGHT!";
+    //     displayRightWrongEl.appendChild(correctAnswerDisplay);  
+    // 
+    }
+    else {
+        // var incorrectAnswerDisplay = document.createElement("div");
+        // incorrectAnswerDisplay.className = "answer";
+        // incorrectAnswerDisplay.textContent = "PREVIOUS ANSWER WAS WRONG!";
+        // displayRightWrongEl.appendChild(incorrectAnswerDisplay);
+        quizScore = quizScore - 10;
+    }
+    questionCounter++;
+    displayQuestions();
+};
 
 //function to go through and display answers as buttons
 var displayQuestions = function () {
@@ -133,28 +155,7 @@ var displayQuestions = function () {
     }
 };
 
-var checkAnswers = function () {
-    //empty out display before you populate new information
-    displayRightWrongEl.innerHTML = "";
-    console.log(this.value);
-    if (this.value == "true") {
-        console.log("they answered correctly")
-        // var correctAnswerDisplay = document.createElement("div");
-    //     correctAnswerDisplay.className = "answer";
-    //     correctAnswerDisplay.textContent = "PREVIOUS ANSWER WAS RIGHT!";
-    //     displayRightWrongEl.appendChild(correctAnswerDisplay);  
-    // 
-    }
-    else {
-        // var incorrectAnswerDisplay = document.createElement("div");
-        // incorrectAnswerDisplay.className = "answer";
-        // incorrectAnswerDisplay.textContent = "PREVIOUS ANSWER WAS WRONG!";
-        // displayRightWrongEl.appendChild(incorrectAnswerDisplay);
-        quizScore = quizScore - 10;
-    }
-    questionCounter++;
-    displayQuestions();
-};
+
 
 //Timer Function 
 var ScoreTracker = function () {
