@@ -10,6 +10,7 @@ var quizScore = 90 //start score/timer at 90 seconds
 var startButtonEl = document.createElement("button"); //start quiz button
 var questionCounter = 0;
 var timeInterval;
+var userName=[];
 
 
 var questions = [
@@ -122,14 +123,9 @@ var displayQuestions = function () {
             //.value is giving the actual button a value attribute
             answerButton.value = questions[questionCounter].answer[i].correct;
             answerButton.onclick = checkAnswers;
-            console.log(answerButton);
-           
             buttonContainerEl.appendChild(answerButton);
             questionPage.appendChild(buttonContainerEl);
-
-
-        }
-
+        }    
     }
 };
 
@@ -139,16 +135,16 @@ var  checkAnswers = function () {
     console.log(this.value);
     if (this.value == "true") {
         var correctAnswerDisplay = document.createElement("div");
-        correctAnswerDisplay.className = "answer";
-        correctAnswerDisplay.textContent = "PREVIOUS ANSWER WAS RIGHT!";
-        displayRightWrong.appendChild(correctAnswerDisplay);
+        //correctAnswerDisplay.className = "answer";
+        //correctAnswerDisplay.textContent = "PREVIOUS ANSWER WAS RIGHT!";
+       // displayRightWrong.appendChild(correctAnswerDisplay);
         
     }
     else {
         var incorrectAnswerDisplay = document.createElement("div");
-        incorrectAnswerDisplay.className = "answer";
-        incorrectAnswerDisplay.textContent = "PREVIOUS ANSWER WAS WRONG!";
-        displayRightWrong.appendChild(incorrectAnswerDisplay);
+       // incorrectAnswerDisplay.className = "answer";
+       // incorrectAnswerDisplay.textContent = "PREVIOUS ANSWER WAS WRONG!";
+        //displayRightWrong.appendChild(incorrectAnswerDisplay);
         quizScore = quizScore - 10;
     }
     questionCounter++;
@@ -184,10 +180,21 @@ var GameOver = function () {
     clearInterval(timeInterval); //stops the counter from continuing to go 
     QuizEl.innerHTML = "";
     var h1GameOver = document.createElement("h1");
+    var yourScore = document.createElement("h2");
+    var getUserNameContainer = document.createElement("div");
+    var descriptionGetUserName = document.createElement("h2");
+        userName = document.createElement("INPUT");
+    userName.setAttribute("type", "text");
+    userName.className = "h2-style-border";
+    getUserNameContainer.className = "button-center";
+    descriptionGetUserName.className =  
     h1GameOver.className ="h1-welcome";
+    yourScore.className = "h2-style";
     h1GameOver.textContent= "The game is over";
+    yourScore.textContent = "Your score is: " + quizScore;
     QuizEl.appendChild(h1GameOver);
-
+    QuizEl.appendChild(yourScore);
+    QuizEl.appendChild(userName);
 
     //save my initials and score
     //TO DO: create an array to save all the information- initials and score and potentially an id to specify which of the scores- use push to get in

@@ -126,6 +126,21 @@ section {
 
 }
 
+.h2-style {
+    font-size: 30px;
+    color: var(--second-color);
+    text-align: center;
+    margin: 30px auto auto auto;
+}
+.h2-style-border {
+    font-size: 30px;
+    color: var(--second-color);
+    text-align: center;
+    margin: 30px auto auto auto;
+    border: 2px solid var(--third-color);
+    justify-content: center;
+}
+
 
 
 
