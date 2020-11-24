@@ -4,13 +4,17 @@ var ViewHighScoreEl = document.querySelector("#view-high-score");
 var QuizEl = document.querySelector("#quiz");
 var startEl = document.querySelector("#start");
 var timerScore = document.querySelector("#timer-score");
-var displayRightWrong = document.querySelector("#check-answer");
-var displayHighScores = document.queryCommandEnabled("#display-high-scores");
-var quizScore = 90 //start score/timer at 90 seconds
+var displayRightWrongEl = document.querySelector("#check-answer");
+var displayScoresEl = document.queryCommandEnabled("#display-high-scores");
+var quizScore = 90 //start score/timer at ___ seconds
 var startButtonEl = document.createElement("button"); //start quiz button
+var saveUserNameButton = document.createElement("button");
 var questionCounter = 0;
 var timeInterval;
-var userName=[];
+var userName = [];
+var scoreAndUserName = [];
+var divForUserInputAndSave= document.createElement("div");
+var goToQuizButton = document.createElement("button");
 
 
 var questions = [
@@ -98,7 +102,7 @@ var WelcomeQuiz = function () {
 var displayQuestions = function () {
     if (quizScore <= 0 || questionCounter > questions.length) {
         GameOver();
-        
+
     }
     //Display questions, and then each question's specific answer choices
     if (questionCounter < questions.length) {
@@ -125,26 +129,27 @@ var displayQuestions = function () {
             answerButton.onclick = checkAnswers;
             buttonContainerEl.appendChild(answerButton);
             questionPage.appendChild(buttonContainerEl);
-        }    
+        }
     }
 };
 
-var  checkAnswers = function () {
+var checkAnswers = function () {
     //empty out display before you populate new information
-    displayRightWrong.innerHTML = "";
+    displayRightWrongEl.innerHTML = "";
     console.log(this.value);
     if (this.value == "true") {
-        var correctAnswerDisplay = document.createElement("div");
-        //correctAnswerDisplay.className = "answer";
-        //correctAnswerDisplay.textContent = "PREVIOUS ANSWER WAS RIGHT!";
-       // displayRightWrong.appendChild(correctAnswerDisplay);
-        
+        console.log("they answered correctly")
+        // var correctAnswerDisplay = document.createElement("div");
+    //     correctAnswerDisplay.className = "answer";
+    //     correctAnswerDisplay.textContent = "PREVIOUS ANSWER WAS RIGHT!";
+    //     displayRightWrongEl.appendChild(correctAnswerDisplay);  
+    // 
     }
     else {
-        var incorrectAnswerDisplay = document.createElement("div");
-       // incorrectAnswerDisplay.className = "answer";
-       // incorrectAnswerDisplay.textContent = "PREVIOUS ANSWER WAS WRONG!";
-        //displayRightWrong.appendChild(incorrectAnswerDisplay);
+        // var incorrectAnswerDisplay = document.createElement("div");
+        // incorrectAnswerDisplay.className = "answer";
+        // incorrectAnswerDisplay.textContent = "PREVIOUS ANSWER WAS WRONG!";
+        // displayRightWrongEl.appendChild(incorrectAnswerDisplay);
         quizScore = quizScore - 10;
     }
     questionCounter++;
@@ -173,49 +178,88 @@ var startQuiz = function () {
 
     //Go through array of questions and choices
     displayQuestions();
-    
 };
 
 var GameOver = function () {
     clearInterval(timeInterval); //stops the counter from continuing to go 
     QuizEl.innerHTML = "";
+    
     var h1GameOver = document.createElement("h1");
     var yourScore = document.createElement("h2");
-    var getUserNameContainer = document.createElement("div");
-    var descriptionGetUserName = document.createElement("h2");
-        userName = document.createElement("INPUT");
-    userName.setAttribute("type", "text");
-    userName.className = "h2-style-border";
-    getUserNameContainer.className = "button-center";
-    descriptionGetUserName.className =  
-    h1GameOver.className ="h1-welcome";
+    
+    divForUserInputAndSave.className = "container-center";
+
+    h1GameOver.className = "h1-game-over";
+    h1GameOver.textContent = "GAME OVER!";
+
     yourScore.className = "h2-style";
-    h1GameOver.textContent= "The game is over";
-    yourScore.textContent = "Your score is: " + quizScore;
+    yourScore.textContent = "FINAL SCORE: " + quizScore;
+
+    //global variable information- saved button and username
+    userName = document.createElement("INPUT");
+    userName.setAttribute("type", "text");
+    // ****IS THIS WHAT I NEED TO CHANGE TO HAVE THE USERINPUT SAVE AS A NAME
+    // userName.setAttribute("name", savedUserName);
+    userName.className = "h2-style-border";
+    userName.placeholder = "Type in username here";
+
+    saveUserNameButton.className = "button-style";
+    saveUserNameButton.textContent = "SAVE";
+    
+    //Append to Page
     QuizEl.appendChild(h1GameOver);
     QuizEl.appendChild(yourScore);
-    QuizEl.appendChild(userName);
-
-    //save my initials and score
-    //TO DO: create an array to save all the information- initials and score and potentially an id to specify which of the scores- use push to get in
-
+    divForUserInputAndSave.appendChild(userName);
+    divForUserInputAndSave.appendChild(saveUserNameButton);
+    QuizEl.appendChild(divForUserInputAndSave);
 };
 
-//create function for viewing highscore 
-//localStorage.setItem
-//localStorage.getItem
+var viewHighScores = function () {
+    QuizEl.innerHTML = "";
 
+}
+
+var goBackToQuiz  = function () {
+    goToQuizButton.className ="button-1-style";
+    goToQuizButton.textContent ="Return To Quiz";
+    console.log(goToQuizButton);
+    displayScoresEl.appendChild(goToQuizButton);
+};
+
+
+
+//As soon as page loads
 WelcomeQuiz();
+
 startButtonEl.addEventListener("click", startQuiz);
-ViewHighScoreEl.addEventListener("click", function() {
+goToQuizButton.addEventListener("click", WelcomeQuiz);
+//save UserName and Quiz Score to 
+saveUserNameButton.addEventListener("click", function () {
+   
+    var savedSuccessfully = document.createElement("h2");
+    savedSuccessfully.className = "saved-success";
+    savedSuccessfully.textContent = "Saved sucessfully!";
+    divForUserInputAndSave.appendChild(savedSuccessfully);
+    QuizEl.appendChild(divForUserInputAndSave);
+    console.log(userName);
+    scoreAndUserName = scoreAndUserName.concat(userName);
+    scoreAndUserName = scoreAndUserName.concat(quizScore);
+    console.log(scoreAndUserName);
+    localStorage.setItem("scoreAndUserName", JSON.stringify(scoreAndUserName));
+});
+
+ViewHighScoreEl.addEventListener("click", function () {
+    QuizEl.className ="hide";
+    goBackToQuiz();
     if (this.value === "true") {
         //display area that they show their score
         this.value = "false";
-        
+
     }
     else {
         //when it is false
         this.value = "true";
-        displayHighScores.className = "hide";
+        displayScoresEl.className = "hide";
     }
-})
+});
+

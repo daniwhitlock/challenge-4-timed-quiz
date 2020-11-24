@@ -21,14 +21,17 @@ header {
     z-index: 9999;
     justify-content: space-between;
 }
-header button{
+/* header button{ */
+.button-1-style {
     text-decoration: none;
+    font-size: 25px;
     display: flex;
     justify-content: center;
     color: var(--fourth-color);
     background-color: var(--third-color);
     padding: 10px 10px 10px 10px;
     border-radius: 10px;
+    border: none;
 }
 
 header div {
@@ -53,6 +56,7 @@ header div {
     padding: 10px 10px;
     font-size: 25px;
     text-align: center;
+    margin: auto auto auto 20px;
 }
 .button-style:hover {
     background-color: var(--third-color);
@@ -125,12 +129,20 @@ section {
     margin: 20px auto 20px auto;
 
 }
+/* Game Over Page */
+.h1-game-over {
+    font-size: 60px;
+    font-style: bold;
+    text-align: center;
+    width: 100%;
+    margin: 20px auto 30px auto; 
+}
 
 .h2-style {
     font-size: 30px;
     color: var(--second-color);
     text-align: center;
-    margin: 30px auto auto auto;
+    margin: 30px auto auto 20px;
 }
 .h2-style-border {
     font-size: 30px;
@@ -139,11 +151,25 @@ section {
     margin: 30px auto auto auto;
     border: 2px solid var(--third-color);
     justify-content: center;
+    border-radius: 10px;
+   
 }
 
+.container-center {
+    margin: 30px; 
+    position: absolute; 
+    top: 50%;
+    left: 50%; 
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    
+}
 
-
-
+.saved-success {
+    color: var(--third-color);
+    padding: 30px auto auto auto auto;
+    text-align: left;
+}
 
 /* //hide different questions from page */
 .hide {
