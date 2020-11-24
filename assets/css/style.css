@@ -32,6 +32,11 @@ header {
     padding: 10px 10px 10px 10px;
     border-radius: 10px;
     border: none;
+    margin: auto 10px auto 10px;
+}
+.button-2-style {
+    background-color: var(--fourth-color);
+    color: var(--third-color);
 }
 
 header div {
@@ -174,6 +179,9 @@ section {
 /* //hide different questions from page */
 .hide {
     display: none;
+}
+.unhide {
+    display: inline-block;
 }
 
 

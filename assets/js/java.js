@@ -1,11 +1,12 @@
 //global VARIABLES 
 var ViewHighScoreEl = document.querySelector("#view-high-score");
 
-var QuizEl = document.querySelector("#quiz");
+var quizEl = document.querySelector("#quiz");
 var startEl = document.querySelector("#start");
 var timerScore = document.querySelector("#timer-score");
 var displayRightWrongEl = document.querySelector("#check-answer");
-var displayScoresEl = document.queryCommandEnabled("#display-high-scores");
+var displayScoresEl = document.querySelector("#display-high-scores");
+var takeQuizAgain = document.querySelector("#take-quiz-again");
 var quizScore = 90 //start score/timer at ___ seconds
 var startButtonEl = document.createElement("button"); //start quiz button
 var saveUserNameButton = document.createElement("button");
@@ -13,8 +14,8 @@ var questionCounter = 0;
 var timeInterval;
 var userName = [];
 var scoreAndUserName = [];
-var divForUserInputAndSave= document.createElement("div");
-var goToQuizButton = document.createElement("button");
+var divForUserInputAndSave = document.createElement("div");
+
 
 
 var questions = [
@@ -66,18 +67,19 @@ var questions = [
 ];
 
 //Start button starts quiz
-var WelcomeQuiz = function () {
+var welcomeQuiz = function () {
+    quizEl.className = "unhide";
     //header info
     var h1El = document.createElement("h1"); //create header for Coding Quiz Challenge
     h1El.textContent = "Coding Quiz Challenge";
     h1El.className = "h1-welcome";
-    QuizEl.appendChild(h1El); //make h1 appear on page
+    quizEl.appendChild(h1El); //make h1 appear on page
 
     //text info
     var textEl = document.createElement("p"); //create description of quiz
     textEl.textContent = "Try to answer the following code-related questions within the time limit.  Keep in mind that incorrect answers will penalize your score/time by ten seconds!"; //How to add a break in the text to new line???
     textEl.className = "p-welcome";
-    QuizEl.appendChild(textEl); //make description appear
+    quizEl.appendChild(textEl); //make description appear
 
     //button info
     var buttonCenterEl = document.createElement("div");
@@ -88,7 +90,7 @@ var WelcomeQuiz = function () {
     buttonContainerEl.className = "button-container";
     buttonCenterEl.appendChild(startButtonEl);
     buttonContainerEl.appendChild(buttonCenterEl);
-    QuizEl.appendChild(buttonContainerEl);
+    quizEl.appendChild(buttonContainerEl);
 
     // Hide information from welcomequiz when start button is clicked
     if (startButtonEl.addEventListener("click", function () {
@@ -96,7 +98,8 @@ var WelcomeQuiz = function () {
         textEl.className = "hide";
         startButtonEl.className = "hide";
     }));
-};
+
+}
 var checkAnswers = function () {
     //empty out display before you populate new information
     displayRightWrongEl.innerHTML = "";
@@ -104,10 +107,10 @@ var checkAnswers = function () {
     if (this.value == "true") {
         console.log("they answered correctly")
         // var correctAnswerDisplay = document.createElement("div");
-    //     correctAnswerDisplay.className = "answer";
-    //     correctAnswerDisplay.textContent = "PREVIOUS ANSWER WAS RIGHT!";
-    //     displayRightWrongEl.appendChild(correctAnswerDisplay);  
-    // 
+        //     correctAnswerDisplay.className = "answer";
+        //     correctAnswerDisplay.textContent = "PREVIOUS ANSWER WAS RIGHT!";
+        //     displayRightWrongEl.appendChild(correctAnswerDisplay);  
+        // 
     }
     else {
         // var incorrectAnswerDisplay = document.createElement("div");
@@ -128,7 +131,7 @@ var displayQuestions = function () {
     }
     //Display questions, and then each question's specific answer choices
     if (questionCounter < questions.length) {
-        QuizEl.innerHTML = "";
+        quizEl.innerHTML = "";
         var questionPage = document.createElement("div");
         var questionHeader = document.createElement("div");
         var question = document.createElement("h1");
@@ -136,7 +139,7 @@ var displayQuestions = function () {
         question.textContent = questions[questionCounter].question;
         questionHeader.appendChild(question);
         questionPage.appendChild(questionHeader);
-        QuizEl.appendChild(questionPage);
+        quizEl.appendChild(questionPage);
 
         //display answers and check if answer is correct   
 
@@ -183,11 +186,11 @@ var startQuiz = function () {
 
 var GameOver = function () {
     clearInterval(timeInterval); //stops the counter from continuing to go 
-    QuizEl.innerHTML = "";
-    
+    quizEl.innerHTML = "";
+
     var h1GameOver = document.createElement("h1");
     var yourScore = document.createElement("h2");
-    
+
     divForUserInputAndSave.className = "container-center";
 
     h1GameOver.className = "h1-game-over";
@@ -206,52 +209,54 @@ var GameOver = function () {
 
     saveUserNameButton.className = "button-style";
     saveUserNameButton.textContent = "SAVE";
-    
+
     //Append to Page
-    QuizEl.appendChild(h1GameOver);
-    QuizEl.appendChild(yourScore);
+    quizEl.appendChild(h1GameOver);
+    quizEl.appendChild(yourScore);
     divForUserInputAndSave.appendChild(userName);
     divForUserInputAndSave.appendChild(saveUserNameButton);
-    QuizEl.appendChild(divForUserInputAndSave);
+    quizEl.appendChild(divForUserInputAndSave);
 };
 
 var viewHighScores = function () {
-    QuizEl.innerHTML = "";
+    quizEl.innerHTML = "";
 
 }
 
-var goBackToQuiz  = function () {
-    goToQuizButton.className ="button-1-style";
-    goToQuizButton.textContent ="Return To Quiz";
-    console.log(goToQuizButton);
-    displayScoresEl.appendChild(goToQuizButton);
-};
+
 
 
 
 //As soon as page loads
-WelcomeQuiz();
+welcomeQuiz();
 
 startButtonEl.addEventListener("click", startQuiz);
-goToQuizButton.addEventListener("click", WelcomeQuiz);
+
+
+// takeQuizAgain.addEventListener("click", function () {
+//     startQuiz();
+// }); //not showing up because innerHTMl is ""?
+
 //save UserName and Quiz Score to 
 saveUserNameButton.addEventListener("click", function () {
-   
     var savedSuccessfully = document.createElement("h2");
     savedSuccessfully.className = "saved-success";
-    savedSuccessfully.textContent = "Saved sucessfully!";
+    savedSuccessfully.textContent = "SAVED SUCCESSFULLY!";
     divForUserInputAndSave.appendChild(savedSuccessfully);
-    QuizEl.appendChild(divForUserInputAndSave);
+    quizEl.appendChild(divForUserInputAndSave);
     console.log(userName);
-    scoreAndUserName = scoreAndUserName.concat(userName);
-    scoreAndUserName = scoreAndUserName.concat(quizScore);
-    console.log(scoreAndUserName);
-    localStorage.setItem("scoreAndUserName", JSON.stringify(scoreAndUserName));
+    var scoreObj = {
+        score: quizScore,
+        name: userName.value
+    }
+    console.log(scoreObj);
+    localStorage.setItem("scoreObj", JSON.stringify(scoreObj));
 });
 
 ViewHighScoreEl.addEventListener("click", function () {
-    QuizEl.className ="hide";
-    goBackToQuiz();
+    quizEl.className = "hide";
+    //get localStorage - display
+    
     if (this.value === "true") {
         //display area that they show their score
         this.value = "false";
